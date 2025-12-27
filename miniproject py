@@ -1,0 +1,48 @@
+# program for ticket booking of train
+
+from random import randint
+
+class TicketBooking:
+    def __init__(self):
+        self.trains = {128: 5, 20: 2, 45: 0, 12: 143}
+
+    def book(self):
+        invalid_attempts = 0
+        max_attempts = 2
+        while True:#keep asking until a valid booking is made or attempts exceeded
+            trainno = int(input("Enter your train number: "))
+            if trainno not in self.trains:
+                print("Invalid train number. Try again!\n")
+                invalid_attempts+=1
+                if invalid_attempts>=max_attempts :
+                	print ("To many invalid attempts exiting booking .")
+                	return False
+                continue # skip this iteration and ask for train number again 
+
+            if self.trains[trainno] == 0:
+                print("No seats available in this train.\n")
+                continue #skip booking process and ask for another train number
+
+            fro = input("From: ")
+            to = input("To: ")
+
+            self.trains[trainno] -= 1 # Book the ticket by reducing seat count
+
+            print("\nTicket booked successfully!")
+            print(f"{'Train no:':<15}{trainno}")
+            print(f"{'From:':<15}{fro}")
+            print(f"{'To:':<15}{to}")
+            print(f"{'Ticket price:':<15}{randint(400,500)} rupees")
+            print(f"{'Remaining seats:':<15}{self.trains[trainno]}")
+            return True
+
+    def getstatus(self):
+        print("\nTrain is running on time.")
+
+
+t = TicketBooking()
+booking_successful = t.book()
+# If ticket booking is successful run this block
+if booking_successful :
+	t.getstatus( )
+	print ("\nHave a good journey !")
